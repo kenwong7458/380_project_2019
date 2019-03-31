@@ -7,9 +7,8 @@
     </head>
     <body>
         <c:url var="loginUrl" value="/login" />
-        <form action="${logoutUrl}" method="POST">
+        <form action="${loginUrl}" method="GET">
             <input type="submit" value="Log in" />
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         </form>
         
         <h3>Create a Course</h3>

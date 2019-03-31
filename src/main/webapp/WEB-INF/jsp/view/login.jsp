@@ -6,10 +6,10 @@
     </head>
     <body>
         <c:if test="${param.error != null}">
-        <p>Login failed.</p>
+            <p><font color="red">Login failed.</font></p>
         </c:if>
         <c:if test="${param.logout != null}">
-        <p>You have logged out.</p>
+        <p><font color="green">You have logged out.</font></p></p>
         </c:if>
         <h2>MyWebClassroom Login</h2>
         <form action="login" method="POST">

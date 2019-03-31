@@ -229,7 +229,7 @@ public class ClassroomController {
         }
         else {
             System.out.println("false");
-            return new RedirectView("/classroom/lregisterAccount", true);
+            return new RedirectView("/classroom/registerAccount", true);
             //connect to database.
         }
     }
