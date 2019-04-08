@@ -84,7 +84,7 @@ public class ClassroomController {
             Principal principal, HttpServletRequest request) {
         Course course = this.courseDatabase.get(courseId);
         if (course == null
-                || (!request.isUserInRole("ROLE_ADMIN")
+                || (!request.isUserInRole("ROLE_TEACHER")
                 && !principal.getName().equals(course.getCourseLecturer()))) {
             return new ModelAndView(new RedirectView("/classroom/listCourse", true));
         }
@@ -252,7 +252,7 @@ public class ClassroomController {
             throws IOException {
         Course course = this.courseDatabase.get(courseId);
         if (course == null
-                || (!request.isUserInRole("ROLE_ADMIN")
+                || (!request.isUserInRole("ROLE_TEACHER")
                 && !principal.getName().equals(course.getCourseLecturer()))) {
             return "redirect:/classroom/listCourse";
         }
