@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
+import ouhk.comps380f.dao.ClassroomUserRepository;
 import ouhk.comps380f.model.Attachment;
+import ouhk.comps380f.model.ClassroomUser;
 import ouhk.comps380f.model.Course;
 import ouhk.comps380f.model.User;
 import ouhk.comps380f.view.DownloadingView;
@@ -23,6 +26,10 @@ import ouhk.comps380f.view.DownloadingView;
 @Controller
 @RequestMapping("classroom")
 public class ClassroomController {
+    
+    @Resource
+    ClassroomUserRepository classroomUserRepo;
+    
     private volatile long COURSE_ID_SEQUENCE = 1;
     private Map<Long, Course> courseDatabase = new Hashtable<>();
     
@@ -155,7 +162,8 @@ public class ClassroomController {
         private String email;
         private String password;
         private String cPassword;
-
+        private String[] roles;
+        
         public String getUsername() {
             return username;
         }
@@ -187,6 +195,14 @@ public class ClassroomController {
         public void setcPassword(String cPassword) {
             this.cPassword = cPassword;
         }
+
+        public String[] getRoles() {
+            return roles;
+        }
+
+        public void setRoles(String[] roles) {
+            this.roles = roles;
+        }
         
     }
     
@@ -214,17 +230,13 @@ public class ClassroomController {
     
     @RequestMapping(value = "registerAccount", method = RequestMethod.POST)
     public View registerAccount(RegisterAccountForm form) throws IOException {
-        User newUser = new User();
-        newUser.setUsername(form.getUsername());
-        newUser.setPassword(form.getPassword());
-        newUser.setcPassword(form.getcPassword());
-        newUser.setEmail(form.getEmail());
-        String pwd = newUser.getPassword();
-        String cPwd = newUser.getcPassword();
-        
-        if (pwd.equals(cPwd)) {
+        if (form.getPassword().equals(form.getcPassword())) {
             System.out.println("true");
-            return new RedirectView("/classroom/login", true);
+            ClassroomUser user = new ClassroomUser(form.getUsername(), 
+                form.getPassword(), form.getEmail(), form.getRoles()
+            );
+            classroomUserRepo.save(user);
+            return new RedirectView("/login", true);
             //connect to database.
         }
         else {

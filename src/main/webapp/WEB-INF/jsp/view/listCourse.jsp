@@ -6,7 +6,7 @@
         <title>MyWebClassroom</title>
     </head>
     <body>
-        <security:authorize access="hasAnyRole('ADMIN','TEACHER','STUDENT')">
+        <security:authorize access="hasAnyRole('TEACHER','STUDENT')">
             <c:url var="logoutUrl" value="/logout" />
             <form action="${logoutUrl}" method="POST">
                 <input type="submit" value="Log out" />
@@ -14,22 +14,27 @@
             </form>
         </security:authorize>
         
-        <security:authorize access="!hasAnyRole('ADMIN','TEACHER','STUDENT')">
+        <security:authorize access="!hasAnyRole('TEACHER','STUDENT')">
             <c:url var="loginUrl" value="/login" />
             <form action="${loginUrl}" method="GET">
                 <input type="submit" value="Log in" />
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             </form>
         </security:authorize>
-            
-        <h3>Course List</h3>
-        <security:authorize access="!hasAnyRole('ADMIN','TEACHER','STUDENT')">
+        
+        <security:authorize access="hasRole('TEACHER')">
+            <a href="<c:url value="/user" />"> Manage User Accounts</a><br/><br/>
+        </security:authorize>
+        
+        <h3>Classroom Homepage</h3>
+        <security:authorize access="!hasAnyRole('TEACHER','STUDENT')">
             <i>Login to see more information of each course.</i><br/>
         </security:authorize>
             
-        <security:authorize access="hasAnyRole('ADMIN','TEACHER')">
-        <a href="<c:url value="/classroom/create" />">Create a Course </a><br/><br/>
+        <security:authorize access="hasAnyRole('TEACHER')">
+            <a href="<c:url value="/classroom/create" />">Create a Course </a><br/><br/>
         </security:authorize>
+            
         <c:choose>
             <c:when test="${fn:length(courseDatabase)== 0}">
                 <i>There are no courses in the system</i>
@@ -42,10 +47,10 @@
                         <c:out value="${entry.value.courseName}" /></a>
                     (Lecturer: <c:out value="${entry.value.courseLecturer}" />)<br/>
                     
-                    <security:authorize access="hasAnyRole('ADMIN', 'TEACHER')">
+                    <security:authorize access="hasAnyRole('TEACHER')">
                     [<a href="<c:url value="/classroom/edit/${entry.key}" />">Edit</a>]
                     </security:authorize>
-                    <security:authorize access="hasRole('ADMIN')">
+                    <security:authorize access="hasRole('TEACHER')">
                         [<a href="<c:url value="/classroom/delete/${entry.key}" />">Delete</a>]
                     </security:authorize>
                 </c:forEach>

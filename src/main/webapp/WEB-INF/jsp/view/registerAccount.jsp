@@ -24,7 +24,10 @@
             
             <form:label path="cPassword">Confirm your password</form:label><br/>
             <form:input type="password" path="cPassword" /><br/><br/>
-
+            
+            <form:label path="roles"></form:label><br/>
+            <form:checkbox path="roles" value="ROLE_STUDENT" required="required" />I am not a robot.<br/>
+            
             <input type="submit" value="Submit" />
 
         </form:form>
