@@ -26,33 +26,35 @@
             <a href="<c:url value="/user" />"> Manage User Accounts</a><br/><br/>
         </security:authorize>
         
-        <h3>Classroom Homepage</h3>
+        <h3>Course Index</h3>
         <security:authorize access="!hasAnyRole('TEACHER','STUDENT')">
-            <i>Login to see more information of each course.</i><br/>
+            <i>Login to see more information of each lecture.</i><br/>
         </security:authorize>
             
         <security:authorize access="hasAnyRole('TEACHER')">
-            <a href="<c:url value="/classroom/create" />">Create a Course </a><br/><br/>
+            <a href="<c:url value="/classroom/create" />">Create a Lecture </a><br/><br/>
         </security:authorize>
             
         <c:choose>
-            <c:when test="${fn:length(courseDatabase)== 0}">
-                <i>There are no courses in the system</i>
+            <c:when test="${fn:length(lectureDatabase)== 0}">
+                <i>There are no lectures in the system</i>
             </c:when>
+                
             <c:otherwise>
-                <i>There is/are ${fn:length(courseDatabase)} course(s) in total.</i><br/>
-                <c:forEach items="${courseDatabase}" var="entry">
-                    Course ${entry.key}:
-                    <a href="<c:url value="/classroom/view/${entry.key}" />">
-                        <c:out value="${entry.value.courseName}" /></a>
-                    (Lecturer: <c:out value="${entry.value.courseLecturer}" />)<br/>
-                    
+                <i>There is/are ${fn:length(lectureDatabase)} lecture(s) in total.</i><br/><br/>
+                <c:forEach items="${lectureDatabase}" var="lecture">
+                    <b><i># <c:out value="${lecture.tag}" /></i></b><br/>
+                    Lecture ${lecture.id}:
+                    <a href="<c:url value="/classroom/view/${lecture.id}" />">
+                        <c:out value="${lecture.name}" /></a>
+                    <br/>
                     <security:authorize access="hasAnyRole('TEACHER')">
-                    [<a href="<c:url value="/classroom/edit/${entry.key}" />">Edit</a>]
+                    [<a href="<c:url value="/classroom/edit/${lecture.id}" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('TEACHER')">
-                        [<a href="<c:url value="/classroom/delete/${entry.key}" />">Delete</a>]
+                        [<a href="<c:url value="/classroom/delete/${lecture.id}" />">Delete</a>]
                     </security:authorize>
+                    <br/><br/>
                 </c:forEach>
             </c:otherwise>    
         </c:choose>

@@ -9,7 +9,7 @@
         </form>
         <br /><br />
 
-        <a href="<c:url value="/classroom/listCourse" />">Return to list classroom</a>
+        <a href="<c:url value="/classroom/listLecture" />">Return to list classroom</a>
         <h2>Users</h2>
         <a href="<c:url value="/user/create" />">Create a User</a><br /><br />
         <c:choose>

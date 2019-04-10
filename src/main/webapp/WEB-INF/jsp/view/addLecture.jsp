@@ -12,13 +12,16 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         </form>
         
-        <h3>Create a Course</h3>
-        <form:form method="POST" enctype="multipart/form-data" modelAttribute="courseForm">
-            <form:label path="courseName">Course Name</form:label><br/>
-            <form:input type="text" path="courseName" /><br/><br/>
-
-            <form:label path="courseDescription">Course Description</form:label><br/>
-            <form:input type="text" path="courseDescription" /><br/><br/>
+        <h3>Create a Lecture</h3>
+        <form:form method="POST" enctype="multipart/form-data" modelAttribute="lectureForm">
+            <form:label path="name">Lecture Name</form:label><br/>
+            <form:input type="text" path="name" /><br/><br/>
+            
+            <form:label path="tag">Tag</form:label><br/>
+            <form:input type="text" path="tag" /><br/><br/>
+            
+            <form:label path="description">Lecture Description</form:label><br/>
+            <form:input type="text" path="description" /><br/><br/>
             
             Additional Attachment:
             <input type="file" name="attachments" multiple="multiple" /><br/><br/>

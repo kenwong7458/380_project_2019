@@ -11,7 +11,7 @@
             <input type="submit" value="Log in" />
         </form>
         
-        <h3>Create a Course</h3>
+        <h3>Register an Account</h3>
         <form:form method="POST" enctype="multipart/form-data" modelAttribute="registerAccountForm">
             <form:label path="username">Username</form:label><br/>
             <form:input type="text" path="username" /><br/><br/>
